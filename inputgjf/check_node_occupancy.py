@@ -15,8 +15,15 @@ def findopenstate_queuedata():
     return match_data
 
 
-def elif_queuedata():
+def determine node number():
     list of possible pos indexed in order of node number
-    search_queuedata()
+    if matchdata == list:
+        node#=indexofTRUE
+        functiontoinputgjf(node#)
+    return node#
+
+def functiontoinputgjf():
+    #rung16 file_name node_num
+    subprocess.run(["rung16",gjf_name,node_num])
 
 
