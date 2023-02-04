@@ -11,16 +11,19 @@ def queuedata():
 #
 def findopennode_queuedata(node_range_min,node_range_max):
     #regex fgor any number but 32?
-    #make counter to count node # when checking
-    for i in range(node_range_min,node_range_max):
-        open_state_pattern = re.compile('all.q@n'+i+'\wBIP\w0/32')
-        match_data = open_state_pattern.start(queuedata())
+    count = 0
+    open_nodes= []
+    for i in range(1,14):
+        count += 1
+        open_state_pattern = re.compile(r'all.q@n'+str(i)+'\wBIP\w[0-9]/32')
+        if re.match(open_state_pattern,queuedata()):
+            open_nodes += count
+        if re.match()
+
 
     ##catch no match here and return to another function
-    ##queue : line under all.q@n# when job running, then dashes and so on
-    #states 1 at end of job line, au at end of nodeline, ID at start, # of nodes used 0/32 r?, load_avg 0.00
+
     #find q@n# ---> 0/32 -> save node num --> return tup node # and TRUE/FALSE
-    return match_data
 ##one function to find open computer n# one function to find node #/32?
 
 def determine node number():
