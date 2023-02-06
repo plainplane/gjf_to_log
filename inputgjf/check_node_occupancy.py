@@ -10,7 +10,7 @@ def qdata():
 
 
 #
-def nodeslist_qdata(begin_node_range,end_node_range):
+def parsed_qdata(begin_node_range,end_node_range):
     node_num = 0
     individual_node_data = []
     for i in range(begin_node_range,end_node_range+1):
@@ -18,7 +18,6 @@ def nodeslist_qdata(begin_node_range,end_node_range):
         node_datum_pattern = re.compile(r'all.q@n'+str(i)+'[0-9]*[0-9]'' *BIP *[1-9]*[1-9]/32(.*)---')
         node_datum_match = node_datum_pattern.match(qdata())
         node_datum_string = node_datum_match.group()
-
 
         node_occupancy_pattern = re.compile(r'[0-9]|[12][0-9]|3[12]/32')
         node_occupancy_match = node_occupancy_pattern.match(node_datum_string)
