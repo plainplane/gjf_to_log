@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Cobalt_HHeterolysis_gjftolog.iml" filepath="$PROJECT_DIR$/.idea/Cobalt_HHeterolysis_gjftolog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gjf_to_log.iml" filepath="$PROJECT_DIR$/.idea/gjf_to_log.iml" />
     </modules>
   </component>
 </project>
