@@ -23,6 +23,7 @@ def parsed_qdata(begin_node_range, end_node_range):
     individual_node_data = []
     for i in range(begin_node_range, end_node_range + 1):
         node_num += 1
+        time.sleep(.1)
         job_num_match_list = []
         node_datum_pattern = re.compile(r'all\.q@n' + str(i) + ' *BIP *[0-9]*[0-9]/32.*?---', flags=re.DOTALL)
         node_datum_search = node_datum_pattern.search(qdata())
@@ -36,7 +37,7 @@ def parsed_qdata(begin_node_range, end_node_range):
         node_occupancy_int_string = n_o_int_match.group()
 
         if node_occupancy_string[0] == '0':
-            individual_node_data += [[node_num, node_occupancy_string, None, None]]
+            individual_node_data += [[node_num, 0, None, None]]
             continue
 
         newline_to_job_num_pattern = re.compile(r'\n +[0-9]{5}')
@@ -54,20 +55,16 @@ def parsed_qdata(begin_node_range, end_node_range):
         job_tags_string = job_tags_match.group()
 
         individual_node_data += [[node_num, node_occupancy_int_string, job_num_match_list, job_tags_string]]
-        print('node [' + str(node_num) + '] data: ' + '\n[ ' + node_datum_string + ' ]\n')
-        time.sleep(1)
+        #print('node [' + str(node_num) + '] data: ' + '\n[ ' + node_datum_string + ' ]\n')
 
     return individual_node_data
 
 
-def select_node():
-    # cycle node data to select node num
-    node_data = parsed_qdata()
-    for i in node_data:
-        node_occupancy = i[2]
-        return node_occupancy
-
-print(select_node())
+def node_occupancy(nodenum):
+    node_data = parsed_qdata(1, 14)
+    node_occupancy = int(node_data[nodenum][1])
+    return node_occupancy
+print(node_occupancy(5))
 
 
 
