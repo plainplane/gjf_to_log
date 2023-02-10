@@ -9,6 +9,10 @@ with open("queue.txt", "r") as q:
 
 
 def qdata():
+    with open("queue.txt", "r") as q:
+        queue = q.read()
+        queue = queue + '\n---------------'
+    return queue
     str1 = subprocess.run(["qs"])
     str1 += '\n------'
     return str1
@@ -23,9 +27,13 @@ def parsed_qdata(begin_node_range, end_node_range):
         node_datum_pattern = re.compile(r'all\.q@n' + str(i) + ' *BIP *[0-9]*[0-9]/32.*?---', flags=re.DOTALL)
         node_datum_search = node_datum_pattern.search(qdata())
         node_datum_string = node_datum_search.group()
+
         node_occupancy_pattern = re.compile(r'([0-9]|[12][0-9]|[3][12])/32')
         node_occupancy_match = node_occupancy_pattern.search(node_datum_string)
         node_occupancy_string = node_occupancy_match.group()
+        n_o_int_pattern = re.compile(r'[0-9]{1,2}')
+        n_o_int_match = n_o_int_pattern.match(node_occupancy_string)
+        node_occupancy_int_string = n_o_int_match.group()
 
         if node_occupancy_string[0] == '0':
             individual_node_data += [[node_num, node_occupancy_string, None, None]]
@@ -45,9 +53,29 @@ def parsed_qdata(begin_node_range, end_node_range):
         job_tags_match = job_tags_pattern.search(job_tags_to_date_string)
         job_tags_string = job_tags_match.group()
 
-        individual_node_data += [[node_num, node_occupancy_string, job_num_match_list, job_tags_string]]
+        individual_node_data += [[node_num, node_occupancy_int_string, job_num_match_list, job_tags_string]]
         print('node [' + str(node_num) + '] data: ' + '\n[ ' + node_datum_string + ' ]\n')
         time.sleep(1)
 
     return individual_node_data
 
+
+def select_node():
+    # cycle node data to select node num
+    node_data = parsed_qdata()
+    for i in node_data:
+        node_occupancy = i[2]
+        return node_occupancy
+
+print(select_node())
+
+
+
+# ?? other limitations: nproc, set num per node, (read nproc of gjf and determine max?)
+
+# enter job
+
+#def enter_job(job_filename_list):
+    # get filename from list
+    #g16_output = subprocess.run(["g16"+filename+nodenum])
+    #return g16_output
