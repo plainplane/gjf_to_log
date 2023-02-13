@@ -93,13 +93,56 @@ def parsed_qdatum(node):
 
     return individual_node_data
 
-print(parsed_qdatum(5))
-print(parsed_qdata(5,5))
-def node_occupancy(nodenum):
-    node_data = parsed_qdata(1, 14)
-    node_occupancy = int(node_data[nodenum-1][1])
-    return node_occupancy
-#print(node_occupancy(14))
+
+
+def jobs_on_node_int(nodenum):
+    node_data = parsed_qdatum(nodenum)
+    node_occupancy_value = int(node_data[1])
+    return node_occupancy_value
+
+
+def check_to_input(nodenum):
+    safe_to_input = False
+    if jobs_on_node_int(nodenum) < 8:
+        safe_to_input = True
+    return safe_to_input
+
+
+
+def input_gjf(filename,nodenum):
+    return subprocess.run(["rung16", filename, nodenum], capture_output=True)
+
+
+def WIP
+    process_variable(node_number,index_filename):
+    return filename,nodenum
+
+def WIPoverhead_job_entry(process_variable_in):
+    process_variable_out = []
+    return process_variable_out
+
+def list_filenames(txtfile_of_gjfnames):
+    with open(txtfile_of_gjfnames,"r") as f:
+        filename_string = f.read()
+        filename_list = filename_string.split("\n")
+    return filename_list
+
+def node_range(node_range_max,node_range_min):
+    node_nums = [node_range_min,node_range_max]
+    return node_nums
+
+def WIP
+    for i in range(0,len(process_variable[0][0])):
+        return_data += overhead_for_job_entry(process_variable)
+        process_variable = return_data[i]
+    with open("123_abc.txt",'w') as w:
+        w.write(return_data)
+    return return_data
+
+
+
+
+
 
 
 
