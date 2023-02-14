@@ -108,37 +108,29 @@ def check_to_input(nodenum):
     return safe_to_input
 
 
-
 def input_gjf(filename,nodenum):
-    return subprocess.run(["rung16", filename, nodenum], capture_output=True)
+    return_data = subprocess.run(["rung16", filename, nodenum], capture_output=True)
+    return return_data
 
 
-def WIP
-    process_variable(node_number,index_filename):
-    return filename,nodenum
+def files_and_parameters(txtfile_of_gjfnames,node_range_min,node_range_max):
+    node_nums = (node_range_min, node_range_max)
+    with open(txtfile_of_gjfnames,"r") as f:
+        filename_string = f.read()
+        filename_list = filename_string.split("\n")
+    return [filename_list,node_nums]
+
+def scratch_file_write( ):
+    with open("123_abc_scratchy.txt",'w') as w:
+        w.write()
+    return return_data
+
+def process_variable(node_number,index_filename):
+    return index_filename,nodenum
 
 def WIPoverhead_job_entry(process_variable_in):
     process_variable_out = []
     return process_variable_out
-
-def list_filenames(txtfile_of_gjfnames):
-    with open(txtfile_of_gjfnames,"r") as f:
-        filename_string = f.read()
-        filename_list = filename_string.split("\n")
-    return filename_list
-
-def node_range(node_range_max,node_range_min):
-    node_nums = [node_range_min,node_range_max]
-    return node_nums
-
-def WIP
-    for i in range(0,len(process_variable[0][0])):
-        return_data += overhead_for_job_entry(process_variable)
-        process_variable = return_data[i]
-    with open("123_abc.txt",'w') as w:
-        w.write(return_data)
-    return return_data
-
 
 
 
