@@ -6,7 +6,7 @@ import time
 # make a list of matches (matches at start of line/string)
 # input the regex to split the coordinates apart (this assumes somethign like Ir is at the start of each coordinate group)
 # a list of coordinates is returned, a file is written with all the coordinates.
-def coordrawfile_tostring(REGEX_listpatterns_toParse_raw, rawfilein):
+def rawcoord_tostring(REGEX_listpatterns_toParse_raw, rawfilein):
     cwd = os.getcwd()
     path = cwd + '/' + 'parse_byelements.txt'
     lines_string = ''
@@ -22,8 +22,6 @@ def coordrawfile_tostring(REGEX_listpatterns_toParse_raw, rawfilein):
         return coordinate_string
 
 
-
-
 def cord_stringto_list(regex_pattern_toParse_intocorlist,coordinate_string):
     coordinate_list = []
     coordinate_list_pattern = re.compile(regex_pattern_toParse_intocorlist, re.IGNORECASE)
@@ -36,40 +34,54 @@ def cord_stringto_list(regex_pattern_toParse_intocorlist,coordinate_string):
         variable_with_1coord += i
     return coordinate_list
 
-def gjf_header(headerfile, namechk, multiplicity, nproc):
-    with open(headerfile, 'r') as headerfile:
-        headerdata = headerfile.read()
+
+def multi_header_edit(namechk, multiplicity, nproc):
+    headerdata = multi_header_blank()
     headerdata = headerdata.replace('chk=EDIT', 'chk=' + str(namechk))
     headerdata = headerdata.replace('0 1EDIT', multiplicity)
     headerdata = headerdata.replace('nprocshared=EDIT', 'nprocshared=' + str(nproc))
     return headerdata
 
 
-def gjf_basis(file_with_basis):
-    with open(file_with_basis, 'r') as f:
+def multi_header_blank():
+    with open('multi_header.txt', 'r') as headerfile:
+        headerdata = headerfile.read()
+    return headerdata
+
+
+def multi_basis():
+    with open('multi_basisset.txt', 'r') as f:
         basis = f.read()
     return basis
 
-def makebatch_multiplicitygjf(coordinate_list, delimiter, multiplicity_list,nproc):
+def makebatch_multiplicitygjf():
+    rawfile_nowstring_patterns = ['Ir ','C ','H ','N ','O ']
+    name_rawfile = 'delimited_by_newline.txt'
+    stringto_listdelimiter = 'Ir '
+    nproc = str(1)
+    multiplicity_list = ['0 1', '0 2','0 3']
+
     path = os.getcwd()
     gjf_count = 0
-    coordinate_list = output_match_startof_lines_ignorecase(list_of_regex_elements,raw_file)
-    return_data = []
+    rawfile_nowstring = rawcoord_tostring(rawfile_nowstring_patterns, name_rawfile)
 
-    for i in range(1, len(cor_list)):
+    string_nowlist_coordinates = cord_stringto_list(stringto_listdelimiter,rawfile_nowstring)
+    basis = multi_basis()
+
+
+    for i in range(1, len(string_nowlist_coordinates)):
         gjf_count += 1
         multi_count = 0
         for j in multiplicity_list:
             multi_count += 1
-            name = 'z1_' + str(gjf_count) + '_' + str(multi_count) + '_a.gjf'
-            checkpoint = 'z1_' + str(gjf_count) + '_' + str(multi_count) +'a.chk'
-            data = gjf_header('multiheader.txt', checkpoint, j, nproc)
-            data += cor_list[i][0]
+            name = 'z1_index' + str(gjf_count) + '_multiplicity' + str(multi_count) + '_1.gjf'
+            checkpoint = 'z1_index' + str(gjf_count) + '_multiplicity' + str(multi_count) + '_1.chk'
+            data = multi_header_edit(checkpoint,j,nproc)
+            data += string_nowlist_coordinates[i][0]
             print("coordinate "+str(i)+" multi"+str(multi_count))
-            data += gjf_basis('multi_basis_sets.txt')
+            data += basis
             completename = path + '/multi_gjfs/' + name
             with open(completename, 'w') as f:
-                return_data += str(f.write(data)) + '\n'
+                f.write(data)
                 print(completename+" wrote.")
-    return return_data
 
