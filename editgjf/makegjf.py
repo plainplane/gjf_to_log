@@ -1,12 +1,8 @@
 import re
-import os.path
-import copy
 
 ## PARSE out lines that match at beginning of string to an output file
-## make a list of regex patterns
-
+# make a list of regex patterns
 pattern_list = ['Ir ', 'O ', 'N ', 'C ', 'H ']
-
 
 def output_match_startof_lines_ignorecase(REGEX_listofpatterns, filein, fileout):
     path = 'C:/Users/pete/Jupyter/gaussianscripts/test_gjfmaker/' + fileout
@@ -23,8 +19,7 @@ def output_match_startof_lines_ignorecase(REGEX_listofpatterns, filein, fileout)
 
 
 # output_match_startof_lines_ignorecase(pattern_list,"madlib.txt","cleaned_coordinates.txt")
-
-## count number of (#)
+# count number of (#)
 def count_markers(filein):
     count = 0
     pattern = re.compile("Ir ", re.IGNORECASE)
@@ -38,9 +33,9 @@ def count_markers(filein):
 count_markers("cleaned_coordinates.txt")
 
 
-### Create a variable to pass around until it is ready to be written to the disk.
-### pull header data -> edit header data
-###unfinished ???
+# Create a variable to pass around until it is ready to be written to the disk.
+# pull header data -> edit header data
+# unfinished ???
 def gjf_header(headerfile, namechk, multiplicity, nproc):
     with open(headerfile, 'r') as headerfile:
         headerdata = headerfile.read()
@@ -50,7 +45,10 @@ def gjf_header(headerfile, namechk, multiplicity, nproc):
     return headerdata
 
 
-##### create list of (coordinates,orderinlist)
+import re
+
+
+# create list of (coordinates,orderinlist)
 def gjf_cor_list(coordinate_file, regex):
     mark = re.compile(regex, re.IGNORECASE)
     count = -1
@@ -76,17 +74,22 @@ def gjf_basis(file_with_basis):
 
 
 ##making gjfs
-path = 'C:/Users/pete/Jupyter/gaussianscripts/test_gjfmaker/GJFS/'
-count = 0
-cor_list = gjf_cor_list('cleaned_coordinates.txt', 'Ir')
+def makebatchgjf(coordinate_file, delimiter, output_path_name,multiplicity,nproc,):
+    path = output_path_name
+    count = 0
+    cor_list = gjf_cor_list(coordinate_file, delimiter)
 
-for i in range(1, len(cor_list)):
-    count += 1
-    checkpoint = 'aaa_' + str(count) + '.chk'
-    data = gjf_header('baseheader.txt', checkpoint, '0 1', '1')
-    data += cor_list[i][0]
-    data += gjf_basis('basefooter.txt')
-    name = 'aaa_' + str(count) + '.gjf'
-    completename = os.path.join(path, name)
-    with open(completename, 'w') as f:
-        f.write(data)
+    for i in range(1, len(cor_list)):
+        count += 1
+        checkpoint = 'z' + str(count) + '_a.chk'
+        name = 'z' + str(count) + '_a.gjf'
+        data = gjf_header('baseheader.txt', checkpoint, multiplicity, nproc)
+        data += cor_list[i][0]
+        print("coordinate "+i+"")
+        data += gjf_basis('basefooter.txt')
+        completename = path + name
+        with open(completename, 'w') as f:
+            f.write(data)
+
+
+makebatchgjf("cleaned.txt", 'C:\Users\pete\OneDrive\Desktop\scripts\gjf')
