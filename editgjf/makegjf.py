@@ -1,4 +1,5 @@
 import re
+import os
 
 ## PARSE out lines that match at beginning of string to an output file
 # make a list of regex patterns
@@ -94,8 +95,8 @@ def makebatchgjf(coordinate_file, delimiter, output_path_name,multiplicity,nproc
 
 makebatchgjf("cleaned.txt", 'C:\Users\pete\OneDrive\Desktop\scripts\gjf')
 
-def makebatch_multiplicitygjf(coordinate_file, delimiter, output_path_name,multiplicity_list,nproc):
-    path = output_path_name
+def makebatch_multiplicitygjf(coordinate_file, delimiter, multiplicity_list,nproc):
+    path = os.getcwd()
     gjf_count = 0
     cor_list = gjf_cor_list(coordinate_file, delimiter)
     return_data = []
@@ -111,11 +112,11 @@ def makebatch_multiplicitygjf(coordinate_file, delimiter, output_path_name,multi
             data += cor_list[i][0]
             print("coordinate "+i+" multi"+multi_count)
             data += gjf_basis('basefooter.txt')
-            completename = path + name
+            completename = path + '/' + name
             with open(completename, 'w') as f:
                 return_data += f.write(data) + '\n'
                 print(completename+" wrote.")
     return return_data
+multiplicity_list=['0 1', '0 2','0 3']
 
-
-makebatch_multiplicitygjf(coordinate_file, delimiter, output_path_name,multiplicity_list,nproc)
+makebatch_multiplicitygjf('coordinates_test.txt', 'Ir',multiplicity_list,'1')
