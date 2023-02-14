@@ -31,9 +31,6 @@ def count_markers(filein):
     return count
 
 
-count_markers("cleaned_coordinates.txt")
-
-
 # Create a variable to pass around until it is ready to be written to the disk.
 # pull header data -> edit header data
 # unfinished ???
@@ -44,9 +41,6 @@ def gjf_header(headerfile, namechk, multiplicity, nproc):
     headerdata = headerdata.replace('0 1EDIT', multiplicity)
     headerdata = headerdata.replace('nprocshared=EDIT', 'nprocshared=' + str(nproc))
     return headerdata
-
-
-import re
 
 
 # create list of (coordinates,orderinlist)
@@ -75,8 +69,9 @@ def gjf_basis(file_with_basis):
 
 
 ##making gjfs
-def makebatchgjf(coordinate_file, delimiter, output_path_name,multiplicity,nproc,):
-    path = output_path_name
+def makebatchgjf(coordinate_file, delimiter,multiplicity,nproc,):
+    path = os.getcwd()
+    path += '/lowest_energy_multiplicity/'
     count = 0
     cor_list = gjf_cor_list(coordinate_file, delimiter)
 
@@ -93,7 +88,6 @@ def makebatchgjf(coordinate_file, delimiter, output_path_name,multiplicity,nproc
             f.write(data)
 
 
-makebatchgjf("cleaned.txt", 'C:\Users\pete\OneDrive\Desktop\scripts\gjf')
 
 def makebatch_multiplicitygjf(coordinate_file, delimiter, multiplicity_list,nproc):
     path = os.getcwd()
@@ -108,15 +102,36 @@ def makebatch_multiplicitygjf(coordinate_file, delimiter, multiplicity_list,npro
             multi_count += 1
             name = 'z1_' + str(gjf_count) + '_' + str(multi_count) + '_a.gjf'
             checkpoint = 'z1_' + str(gjf_count) + '_' + str(multi_count) +'a.chk'
-            data = gjf_header('baseheader.txt', checkpoint, j, nproc)
+            data = gjf_header('header.txt', checkpoint, j, nproc)
             data += cor_list[i][0]
-            print("coordinate "+i+" multi"+multi_count)
-            data += gjf_basis('basefooter.txt')
-            completename = path + '/' + name
+            print("coordinate "+str(i)+" multi"+str(multi_count))
+            data += gjf_basis('basis_sets.txt')
+            completename = path + '/multi_gjfs/' + name
             with open(completename, 'w') as f:
-                return_data += f.write(data) + '\n'
+                return_data += str(f.write(data)) + '\n'
                 print(completename+" wrote.")
     return return_data
-multiplicity_list=['0 1', '0 2','0 3']
 
-makebatch_multiplicitygjf('coordinates_test.txt', 'Ir',multiplicity_list,'1')
+
+multiplicity_list = ['0 1', '0 2','0 3']
+
+print(makebatch_multiplicitygjf('coordinates_test.txt', 'Ir',multiplicity_list,'1'))
+#input and save in groups 1 -> i
+
+def makebatchgjf_from_lowest_e_multi(multiplicity_log_files,nproc):
+    path = os.getcwd()
+    path += '/lowest_energy_multiplicity/'
+    count = 0
+    cor_list = gjf_cor_list(coordinate_file, delimiter)
+
+    for i in range(1, len(cor_list)):
+        count += 1
+        checkpoint = 'z' + str(count) + '_a.chk'
+        name = 'z' + str(count) + '_a.gjf'
+        data = gjf_header('baseheader.txt', checkpoint, multiplicity, nproc)
+        data += cor_list[i][0]
+        print("coordinate "+i+"")
+        data += gjf_basis('basefooter.txt')
+        completename = path + name
+        with open(completename, 'w') as f:
+            f.write(data)
