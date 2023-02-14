@@ -102,10 +102,10 @@ def makebatch_multiplicitygjf(coordinate_file, delimiter, multiplicity_list,npro
             multi_count += 1
             name = 'z1_' + str(gjf_count) + '_' + str(multi_count) + '_a.gjf'
             checkpoint = 'z1_' + str(gjf_count) + '_' + str(multi_count) +'a.chk'
-            data = gjf_header('header.txt', checkpoint, j, nproc)
+            data = gjf_header('multiheader.txt', checkpoint, j, nproc)
             data += cor_list[i][0]
             print("coordinate "+str(i)+" multi"+str(multi_count))
-            data += gjf_basis('basis_sets.txt')
+            data += gjf_basis('multi_basis_sets.txt')
             completename = path + '/multi_gjfs/' + name
             with open(completename, 'w') as f:
                 return_data += str(f.write(data)) + '\n'

@@ -1,5 +1,5 @@
 %chk=EDIT
-%mem=28GB
+%mem=1GB
 %nprocshared=EDIT
 # opt=(calcall,loose,cartesian,maxcycle=1000,maxstep=6) genecp
 scrf=(smd,solvent=water) nosymm scf=(qc,maxcycle=1000) int=ultrafine m06
