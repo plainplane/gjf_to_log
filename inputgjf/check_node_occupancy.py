@@ -116,17 +116,17 @@ def files_and_parameters(txtfile_of_gjfnames, node_range_min, node_range_max):
     with open(txtfile_of_gjfnames, "r") as f:
         filename_string = f.read()
         filename_list = filename_string.split("\n")
-    with open("123_abc_scratchy.txt", 'w') as w:
-        return_data = w.write()
 
     nodes_list = []
-    return_data = []
     for i in range(node_range_min, node_range_max):
         nodes_list += i
 
+    return_data = ''
     for i in range(0, len(filename_list)):
-        return_data += loop_nodes_till_entry(nodes_list, filename_list[i])
-
+        return_data += loop_nodes_till_entry(nodes_list, filename_list[i]) + '\n'
+    with open("123_abc_scratchy.txt", 'w') as w:
+        return_data += w.write(return_data)
+    return return_data
 
 def loop_nodes_till_entry(nodes_list, filename):
     job_entered = False
@@ -137,14 +137,6 @@ def loop_nodes_till_entry(nodes_list, filename):
                 return_data = input_gjf(filename, int(i))
                 return return_data
 
-
-def process_variable(node_number, index_filename):
-    return index_filename, nodenum
-
-
-def WIPoverhead_job_entry(process_variable_in):
-    process_variable_out = []
-    return process_variable_out
 
 # ?? other limitations: nproc, set num per node, (read nproc of gjf and determine max?)
 
