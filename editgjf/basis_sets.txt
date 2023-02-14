@@ -1,0 +1,11 @@
+
+C H N O 0
+cc-pvdz
+****
+Ir 0
+LANL2DZ
+****
+
+Ir 0
+LANL2DZ
+

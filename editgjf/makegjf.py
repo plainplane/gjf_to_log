@@ -93,3 +93,29 @@ def makebatchgjf(coordinate_file, delimiter, output_path_name,multiplicity,nproc
 
 
 makebatchgjf("cleaned.txt", 'C:\Users\pete\OneDrive\Desktop\scripts\gjf')
+
+def makebatch_multiplicitygjf(coordinate_file, delimiter, output_path_name,multiplicity_list,nproc):
+    path = output_path_name
+    gjf_count = 0
+    cor_list = gjf_cor_list(coordinate_file, delimiter)
+    return_data = []
+
+    for i in range(1, len(cor_list)):
+        gjf_count += 1
+        multi_count = 0
+        for j in multiplicity_list:
+            multi_count += 1
+            name = 'z1_' + str(gjf_count) + '_' + str(multi_count) + '_a.gjf'
+            checkpoint = 'z1_' + str(gjf_count) + '_' + str(multi_count) +'a.chk'
+            data = gjf_header('baseheader.txt', checkpoint, j, nproc)
+            data += cor_list[i][0]
+            print("coordinate "+i+" multi"+multi_count)
+            data += gjf_basis('basefooter.txt')
+            completename = path + name
+            with open(completename, 'w') as f:
+                return_data += f.write(data) + '\n'
+                print(completename+" wrote.")
+    return return_data
+
+
+makebatch_multiplicitygjf(coordinate_file, delimiter, output_path_name,multiplicity_list,nproc)
