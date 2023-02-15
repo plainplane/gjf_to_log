@@ -10,4 +10,18 @@
 import os
 print('hi')
 x = os.getcwd()
-print(x)
+w = os.path.abspath(x)
+v = os.path.split(w)
+
+print(v)
+print()
+
+def back(num_of_dir_back):
+    x = os.getcwd()
+    w = os.path.abspath(x)
+    for i in range(0,num_of_dir_back):
+        w = os.path.split(w)
+        w = w[0]
+    return w
+
+print(back(2))

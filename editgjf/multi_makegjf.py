@@ -2,6 +2,38 @@ import re
 import os
 import time
 
+def makebatch_multiplicitygjf():
+    # parameters
+    rawfile_nowstring_patterns = ['Ir ','C ','H ','N ','O ']
+    name_rawfile = 'delimited_by_newline.txt'
+    stringto_listdelimiter = 'Ir '
+    nproc = str(1)
+    multiplicity_list = ['0 1', '0 2', '0 3', '1 1', '1 2', '1 3']
+    path = os.getcwd()
+
+    # get header, body, and basis out of file and into variables
+    # should this be a seperate function? probably: files_to_variables()
+    blank_header = multi_header_blank()
+    rawfile_nowstring = rawcoord_tostring(rawfile_nowstring_patterns, name_rawfile)
+    string_nowlist_coordinates = cord_stringto_list(stringto_listdelimiter,rawfile_nowstring)
+    basis = multi_basis()
+
+    #
+    for i in range(0, len(string_nowlist_coordinates)):
+        time.sleep(1)
+        multi_count = 0
+        for j in multiplicity_list:
+            multi_count += 1
+            name = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.gjf'
+            checkpoint = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.chk'
+            data = multi_header_edit(blank_header, checkpoint,j,nproc)
+            data += string_nowlist_coordinates[i]
+            data += basis
+            print("coordinate " + str(i + 1) + " multi" + str(multi_count) + '\n' + data)
+            completename = path + '/multi_gjfs/charge0/' + name
+            with open(completename, 'w') as f:
+                f.write(data)
+                print(completename+" wrote.")
 # first get a text file w coordinates ordered by newline
 # make a list of matches (matches at start of line/string)
 # input the regex to split the coordinates apart (this assumes somethign like Ir is at the start of each coordinate group)
@@ -61,40 +93,6 @@ def multi_basis():
         basis = f.read()
     return basis
 
-def makebatch_multiplicitygjf():
-    # parameters
-    rawfile_nowstring_patterns = ['Ir ','C ','H ','N ','O ']
-    name_rawfile = 'delimited_by_newline.txt'
-    stringto_listdelimiter = 'Ir '
-    nproc = str(1)
-    multiplicity_list = ['0 1', '0 2', '0 3', '1 1', '1 2', '1 3']
-    path = os.getcwd()
 
-    # get header, body, and basis out of file and into variables
-    # should this be a seperate function? probably: files_to_variables()
-    blank_header = multi_header_blank()
-    rawfile_nowstring = rawcoord_tostring(rawfile_nowstring_patterns, name_rawfile)
-    #print(rawfile_nowstring)
-    string_nowlist_coordinates = cord_stringto_list(stringto_listdelimiter,rawfile_nowstring)
-    print(string_nowlist_coordinates)
-    basis = multi_basis()
-
-    #
-    for i in range(0, len(string_nowlist_coordinates)):
-        time.sleep(1)
-        multi_count = 0
-        for j in multiplicity_list:
-            multi_count += 1
-            name = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.gjf'
-            checkpoint = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.chk'
-            data = multi_header_edit(blank_header, checkpoint,j,nproc)
-            data += string_nowlist_coordinates[i]
-            print(string_nowlist_coordinates[i])
-            data += basis
-            print("coordinate " + str(i + 1) + " multi" + str(multi_count) + '\n' + data)
-            completename = path + '/multi_gjfs/charge0/' + name
-            with open(completename, 'w') as f:
-                f.write(data)
-                print(completename+" wrote.")
 
 makebatch_multiplicitygjf()
