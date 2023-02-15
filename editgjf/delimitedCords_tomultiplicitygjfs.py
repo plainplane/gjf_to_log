@@ -46,13 +46,17 @@ def multi_header_edit(blankheader, namechk, multiplicity, nproc):
 
 
 def multi_header_blank():
-    with open('multi_header.txt', 'r') as headerfile:
+    cwd = os.getcwd()
+    path = cwd + '/multi_templates/' + 'multi_header.txt'
+    with open(path, 'r') as headerfile:
         headerdata = headerfile.read()
     return headerdata
 
 
 def multi_basis():
-    with open('multi_basisset.txt', 'r') as f:
+    cwd = os.getcwd()
+    path = cwd + '/multi_templates/' + 'multi_basisset.txt'
+    with open(path, 'r') as f:
         basis = f.read()
     return basis
 
@@ -69,19 +73,21 @@ def makebatch_multiplicitygjf():
     # should this be a seperate function? probably: files_to_variables()
     blank_header = multi_header_blank()
     rawfile_nowstring = rawcoord_tostring(rawfile_nowstring_patterns, name_rawfile)
+    print(rawfile_nowstring)
     string_nowlist_coordinates = cord_stringto_list(stringto_listdelimiter,rawfile_nowstring)
+    print(string_nowlist_coordinates)
     basis = multi_basis()
 
     #
-    multi_count = 0
-    for i in range(0, len(string_nowlist_coordinates)):
+    for i in range(0, (len(string_nowlist_coordinates)-14)):
         time.sleep(1)
+        multi_count = 0
         for j in multiplicity_list:
             multi_count += 1
             name = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.gjf'
             checkpoint = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.chk'
             data = multi_header_edit(blank_header, checkpoint,j,nproc)
-            data += string_nowlist_coordinates[i][0]
+            data += string_nowlist_coordinates[i]
             data += basis
             print("coordinate " + str(i + 1) + " multi" + str(multi_count) + '\n' + data)
             completename = path + '/multi_gjfs/' + name
