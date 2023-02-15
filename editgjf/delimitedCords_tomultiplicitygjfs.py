@@ -68,7 +68,6 @@ def makebatch_multiplicitygjf():
     string_nowlist_coordinates = cord_stringto_list(stringto_listdelimiter,rawfile_nowstring)
     basis = multi_basis()
 
-
     for i in range(1, len(string_nowlist_coordinates)):
         gjf_count += 1
         multi_count = 0
@@ -85,3 +84,4 @@ def makebatch_multiplicitygjf():
                 f.write(data)
                 print(completename+" wrote.")
 
+makebatch_multiplicitygjf()
