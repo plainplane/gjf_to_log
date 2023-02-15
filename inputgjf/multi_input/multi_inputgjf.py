@@ -2,33 +2,54 @@ import os
 import subprocess
 import re
 import time
-print('hi')
-cwd = os.cwd()
-cwd
+def files_and_parameters(txtfile_of_gjfnames, node_range_min, node_range_max):
+    with open(txtfile_of_gjfnames, "r") as f:
+        filename_string = f.read()
+        filename_list = filename_string.split("\n")
 
-print('hi')
-#def back_to_dir():
+    nodes_list = []
+    for i in range(node_range_min, node_range_max):
+        nodes_list += i
 
-
-
-#def in_to_dir():
-
-
+    return_data = ''
+    for i in range(0, len(filename_list)):
+        return_data += loop_nodes_till_entry(nodes_list, filename_list[i]) + '\n'
+    with open("123_abc_scratchy.txt", 'w') as w:
+        return_data += w.write(return_data)
+    return return_data
 
 def multi_inputgjf():
-    cwd = os.cwd()
-    cwd_to_multigjfs = cwd + '/'
-    os.listdir()
-    list_gjf_names = []
-    nodes_range = (3,5)
-    nodenum_list = []
-        for i in range(nodes_range[0],nodes_range[1]):
-            nodenum_list += i
-    if check_to_input(nodenum) is True:
-        input_gjf(filename,nodenum)
-    for i in nodes_range:
-        loop
+    nodes_range = (3, 5)
 
+    # get dirs
+    cwd = os.getcwd()
+    rootdir = back_n_dir(2)
+    multi_gjfs_dir = rootdir + '/editgjf/multi_gjfs/charge0'
+
+    list_gjf_names = os.listdir(multi_gjfs_dir)
+
+    nodenum_list = []
+    for i in range(nodes_range[0],nodes_range[1]):
+        nodenum_list += i
+
+    for name in list_gjf_names:
+        isinput = False
+        while isinput is False:
+            for node in nodenum_list:
+                if check_to_input(node) is True:
+                    input_gjf(name,node)
+                    isinput = True
+                    print(name +' was input to '+node)
+                    time.sleep(10)
+                    break
+
+def back_n_dir(n):
+    x = os.getcwd()
+    w = os.path.abspath(x)
+    for i in range(0,n):
+        w = os.path.split(w)
+        w = w[0]
+    return w
 
 # call bash; variable=bash string output of queue
 def qdata():
@@ -134,22 +155,6 @@ def input_gjf(filename, nodenum):
     return_data = subprocess.run(["rung16", filename, nodenum], capture_output=True)
     return return_data
 
-
-def files_and_parameters(txtfile_of_gjfnames, node_range_min, node_range_max):
-    with open(txtfile_of_gjfnames, "r") as f:
-        filename_string = f.read()
-        filename_list = filename_string.split("\n")
-
-    nodes_list = []
-    for i in range(node_range_min, node_range_max):
-        nodes_list += i
-
-    return_data = ''
-    for i in range(0, len(filename_list)):
-        return_data += loop_nodes_till_entry(nodes_list, filename_list[i]) + '\n'
-    with open("123_abc_scratchy.txt", 'w') as w:
-        return_data += w.write(return_data)
-    return return_data
 
 def loop_nodes_till_entry(nodes_list, filename):
     job_entered = False

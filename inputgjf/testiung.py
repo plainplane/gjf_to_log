@@ -24,4 +24,5 @@ def back(num_of_dir_back):
         w = w[0]
     return w
 
-print(back(2))
+print(back(1))
+print(os.listdir(back(1)))
