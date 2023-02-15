@@ -80,7 +80,7 @@ def makebatch_multiplicitygjf():
     basis = multi_basis()
 
     #
-    for i in range(0, len(string_nowlist_coordinates):
+    for i in range(0, len(string_nowlist_coordinates)):
         time.sleep(1)
         multi_count = 0
         for j in multiplicity_list:
