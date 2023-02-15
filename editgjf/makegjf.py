@@ -115,7 +115,7 @@ def makebatch_multiplicitygjf(coordinate_file, delimiter, multiplicity_list,npro
 
 multiplicity_list = ['0 1', '0 2','0 3']
 
-print(makebatch_multiplicitygjf('coordinates_test.txt', 'Ir',multiplicity_list,'1'))
+print(makebatch_multiplicitygjf('delimited_by_newline.txt', 'Ir', multiplicity_list, '1'))
 #input and save in groups 1 -> i
 
 def makebatchgjf_from_lowest_e_multi(multiplicity_log_files,nproc):

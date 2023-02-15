@@ -35,8 +35,10 @@ def cord_stringto_list(regex_pattern_toParse_intocorlist,coordinate_string):
     return coordinate_list
 
 
-def multi_header_edit(namechk, multiplicity, nproc):
-    headerdata = multi_header_blank()
+def multi_header_edit(blankheader, namechk, multiplicity, nproc):
+    # not calling the header blank function and instead saving the variable
+    # before a loop allows for the file to only be opened and read once
+    headerdata = blankheader
     headerdata = headerdata.replace('chk=EDIT', 'chk=' + str(namechk))
     headerdata = headerdata.replace('0 1EDIT', multiplicity)
     headerdata = headerdata.replace('nprocshared=EDIT', 'nprocshared=' + str(nproc))
@@ -55,30 +57,33 @@ def multi_basis():
     return basis
 
 def makebatch_multiplicitygjf():
+    # parameters
     rawfile_nowstring_patterns = ['Ir ','C ','H ','N ','O ']
     name_rawfile = 'delimited_by_newline.txt'
     stringto_listdelimiter = 'Ir '
     nproc = str(1)
-    multiplicity_list = ['0 1', '0 2','0 3']
-
+    multiplicity_list = ['0 1', '0 2', '0 3', '1 1', '1 2', '1 3']
     path = os.getcwd()
-    gjf_count = 0
-    rawfile_nowstring = rawcoord_tostring(rawfile_nowstring_patterns, name_rawfile)
 
+    # get header, body, and basis out of file and into variables
+    # should this be a seperate function? probably: files_to_variables()
+    blank_header = multi_header_blank()
+    rawfile_nowstring = rawcoord_tostring(rawfile_nowstring_patterns, name_rawfile)
     string_nowlist_coordinates = cord_stringto_list(stringto_listdelimiter,rawfile_nowstring)
     basis = multi_basis()
 
-    for i in range(1, len(string_nowlist_coordinates)):
-        gjf_count += 1
-        multi_count = 0
+    #
+    multi_count = 0
+    for i in range(0, len(string_nowlist_coordinates)):
+        time.sleep(1)
         for j in multiplicity_list:
             multi_count += 1
-            name = 'z1_index' + str(gjf_count) + '_multiplicity' + str(multi_count) + '_1.gjf'
-            checkpoint = 'z1_index' + str(gjf_count) + '_multiplicity' + str(multi_count) + '_1.chk'
-            data = multi_header_edit(checkpoint,j,nproc)
+            name = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.gjf'
+            checkpoint = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.chk'
+            data = multi_header_edit(blank_header, checkpoint,j,nproc)
             data += string_nowlist_coordinates[i][0]
-            print("coordinate "+str(i)+" multi"+str(multi_count))
             data += basis
+            print("coordinate " + str(i + 1) + " multi" + str(multi_count) + '\n' + data)
             completename = path + '/multi_gjfs/' + name
             with open(completename, 'w') as f:
                 f.write(data)
