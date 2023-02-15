@@ -30,8 +30,12 @@ def cord_stringto_list(regex_pattern_toParse_intocorlist,coordinate_string):
     for i in newline_to_newline:
         if coordinate_list_pattern.match(i):
             coordinate_list += [variable_with_1coord]
+            print(len(coordinate_list))
             variable_with_1coord = ''
-        variable_with_1coord += i
+        variable_with_1coord += i + '\n'
+    coordinate_list.remove('')
+    print(coordinate_list)
+    print(len(coordinate_list))
     return coordinate_list
 
 
@@ -73,13 +77,13 @@ def makebatch_multiplicitygjf():
     # should this be a seperate function? probably: files_to_variables()
     blank_header = multi_header_blank()
     rawfile_nowstring = rawcoord_tostring(rawfile_nowstring_patterns, name_rawfile)
-    print(rawfile_nowstring)
+    #print(rawfile_nowstring)
     string_nowlist_coordinates = cord_stringto_list(stringto_listdelimiter,rawfile_nowstring)
     print(string_nowlist_coordinates)
     basis = multi_basis()
 
     #
-    for i in range(0, (len(string_nowlist_coordinates)-14)):
+    for i in range(0, 1):#len(string_nowlist_coordinates):
         time.sleep(1)
         multi_count = 0
         for j in multiplicity_list:
@@ -88,9 +92,10 @@ def makebatch_multiplicitygjf():
             checkpoint = 'z1_index' + str(i+1) + '_multiplicity' + str(multi_count) + '_1.chk'
             data = multi_header_edit(blank_header, checkpoint,j,nproc)
             data += string_nowlist_coordinates[i]
+            print(string_nowlist_coordinates[i])
             data += basis
             print("coordinate " + str(i + 1) + " multi" + str(multi_count) + '\n' + data)
-            completename = path + '/multi_gjfs/' + name
+            completename = path + '/multi_gjfs/charge0/' + name
             with open(completename, 'w') as f:
                 f.write(data)
                 print(completename+" wrote.")
