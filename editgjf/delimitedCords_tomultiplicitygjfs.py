@@ -30,12 +30,9 @@ def cord_stringto_list(regex_pattern_toParse_intocorlist,coordinate_string):
     for i in newline_to_newline:
         if coordinate_list_pattern.match(i):
             coordinate_list += [variable_with_1coord]
-            print(len(coordinate_list))
             variable_with_1coord = ''
         variable_with_1coord += i + '\n'
     coordinate_list.remove('')
-    print(coordinate_list)
-    print(len(coordinate_list))
     return coordinate_list
 
 
@@ -83,7 +80,7 @@ def makebatch_multiplicitygjf():
     basis = multi_basis()
 
     #
-    for i in range(0, 1):#len(string_nowlist_coordinates):
+    for i in range(0, len(string_nowlist_coordinates):
         time.sleep(1)
         multi_count = 0
         for j in multiplicity_list:
