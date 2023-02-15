@@ -138,6 +138,14 @@ def loop_nodes_till_entry(nodes_list, filename):
                 return return_data
 
 
+def multi_inputgjf():
+    list_gjf_names =
+    nodes_range =
+    for i in nodes_range:
+        loop
+
+
+
 # ?? other limitations: nproc, set num per node, (read nproc of gjf and determine max?)
 
 # enter job
