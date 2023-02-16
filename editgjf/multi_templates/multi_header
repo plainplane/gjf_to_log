@@ -1,7 +1,7 @@
 %chk=EDIT
 %mem=1GB
 %nprocshared=EDIT
-# opt=(loose,cartesian) genecp scf=(qc,maxcycle=1000) int=ultrafine B3LYP
+# opt=(loose,cartesian) genecp scf=(qc,maxcycle=1000) int=ultrafine PBE0
 
 Words
 

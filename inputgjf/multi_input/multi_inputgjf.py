@@ -2,24 +2,13 @@ import os
 import subprocess
 import re
 import time
-def files_and_parameters(txtfile_of_gjfnames, node_range_min, node_range_max):
-    with open(txtfile_of_gjfnames, "r") as f:
-        filename_string = f.read()
-        filename_list = filename_string.split("\n")
 
-    nodes_list = []
-    for i in range(node_range_min, node_range_max):
-        nodes_list += i
-
-    return_data = ''
-    for i in range(0, len(filename_list)):
-        return_data += loop_nodes_till_entry(nodes_list, filename_list[i]) + '\n'
-    with open("123_abc_scratchy.txt", 'w') as w:
-        return_data += w.write(return_data)
-    return return_data
+# get data from multi_templates
+# set node_range below
+#
 
 def multi_inputgjf():
-    nodes_range = (3, 5)
+    nodes_range = (13, 14)
 
     # get dirs
     cwd = os.getcwd()
@@ -166,15 +155,25 @@ def loop_nodes_till_entry(nodes_list, filename):
                 return return_data
 
 
+multi_inputgjf()
 
 
 
+# Archive
 
-# ?? other limitations: nproc, set num per node, (read nproc of gjf and determine max?)
 
-# enter job
-
-# def enter_job(job_filename_list):
-# get filename from list
-# g16_output = subprocess.run(["g16"+filename+nodenum])
-# return g16_output
+# def files_and_parameters(txtfile_of_gjfnames, node_range_min, node_range_max):
+#     with open(txtfile_of_gjfnames, "r") as f:
+#         filename_string = f.read()
+#         filename_list = filename_string.split("\n")
+#
+#     nodes_list = []
+#     for i in range(node_range_min, node_range_max):
+#         nodes_list += i
+#
+#     return_data = ''
+#     for i in range(0, len(filename_list)):
+#         return_data += loop_nodes_till_entry(nodes_list, filename_list[i]) + '\n'
+#     with open("123_abc_scratchy.txt", 'w') as w:
+#         return_data += w.write(return_data)
+#     return return_data
