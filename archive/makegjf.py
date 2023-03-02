@@ -90,7 +90,7 @@ def makebatchgjf(coordinate_file, delimiter,multiplicity,nproc,):
             f.write(data)
 
 
-## making gjf in batch from multiplicity
+## making gjfs where each unique coordinate has multiple gjfs of varying charge and multiplicity
 def makebatch_multiplicitygjf(coordinate_file, delimiter, multiplicity_list,nproc):
     path = os.getcwd()
     gjf_count = 0
