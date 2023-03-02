@@ -3,8 +3,8 @@ import subprocess
 import re
 import time
 
-# get data from multi_templates
-# set node_range below
+# head mid and foot data extracted from from multi_templates
+## set node_range below ##
 #
 
 def multi_inputgjf():

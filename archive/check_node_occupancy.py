@@ -3,13 +3,13 @@ import re
 import time
 
 # call bash; variable=bash string output of queue
-with open("queue.txt", "r") as q:
+with open("../inputgjf/queue.txt", "r") as q:
     queue = q.read()
     queue = queue + '\n---------------'
 
 
 def qdata():
-    with open("queue.txt", "r") as q:
+    with open("../inputgjf/queue.txt", "r") as q:
         queue = q.read()
         queue = queue + '\n---------------'
     return queue
