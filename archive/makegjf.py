@@ -4,6 +4,7 @@ import os
 ## PARSE out lines that match at beginning of string to an output file
 # make a list of regex patterns
 pattern_list = ['Ir ', 'O ', 'N ', 'C ', 'H ']
+multiplicity_list = ['0 1', '0 2','0 3']
 
 def output_match_startof_lines_ignorecase(REGEX_listofpatterns, filein, fileout):
     path = 'C:/Users/pete/Jupyter/gaussianscripts/test_gjfmaker/' + fileout
@@ -20,7 +21,9 @@ def output_match_startof_lines_ignorecase(REGEX_listofpatterns, filein, fileout)
 
 
 # output_match_startof_lines_ignorecase(pattern_list,"madlib.txt","cleaned_coordinates.txt")
-# count number of (#)
+
+
+# count number of delimiters
 def count_markers(filein):
     count = 0
     pattern = re.compile("Ir ", re.IGNORECASE)
@@ -33,7 +36,6 @@ def count_markers(filein):
 
 # Create a variable to pass around until it is ready to be written to the disk.
 # pull header data -> edit header data
-# unfinished ???
 def gjf_header(headerfile, namechk, multiplicity, nproc):
     with open(headerfile, 'r') as headerfile:
         headerdata = headerfile.read()
@@ -68,7 +70,7 @@ def gjf_basis(file_with_basis):
     return basis
 
 
-##making gjfs
+##making gjfs only one multi and charge per unique coordinate
 def makebatchgjf(coordinate_file, delimiter,multiplicity,nproc,):
     path = os.getcwd()
     path += '/lowest_energy_multiplicity/'
@@ -88,7 +90,7 @@ def makebatchgjf(coordinate_file, delimiter,multiplicity,nproc,):
             f.write(data)
 
 
-
+## making gjf in batch from multiplicity
 def makebatch_multiplicitygjf(coordinate_file, delimiter, multiplicity_list,nproc):
     path = os.getcwd()
     gjf_count = 0
@@ -113,11 +115,10 @@ def makebatch_multiplicitygjf(coordinate_file, delimiter, multiplicity_list,npro
     return return_data
 
 
-multiplicity_list = ['0 1', '0 2','0 3']
-
-print(makebatch_multiplicitygjf('delimited_by_newline.txt', 'Ir', multiplicity_list, '1'))
+print(makebatch_multiplicitygjf('../editgjf/delimited_by_newline.txt', 'Ir', multiplicity_list, '1'))
 #input and save in groups 1 -> i
 
+##### archive #####
 def makebatchgjf_from_lowest_e_multi(multiplicity_log_files,nproc):
     path = os.getcwd()
     path += '/lowest_energy_multiplicity/'
